@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace Semana15
 {
@@ -42,6 +43,38 @@ namespace Semana15
                 }
                 rich.Text += "\n";
             }
+        }
+        public List<int[]> Prim()
+        {
+            List<int[]>ArbolExpasion = new List<int[]>();
+            HashSet<int>verticesVisitados = new HashSet<int>();
+
+            int verticeInicial = 0;
+
+            verticesVisitados.Add(verticeInicial);
+
+            while (verticesVisitados.Count < numNodos)
+            {
+                int[] aristaMinimna = null;
+                int costoMinimo=int.MaxValue;
+                foreach(int i in verticesVisitados)
+                {for (int j=0;j < numNodos; j++){
+                        if (!verticesVisitados.Contains(j) && matriz[i, j] != 0)
+                        {
+                            int costoArista = matriz[i, j];
+                            if (costoArista < costoMinimo)
+                            {
+                                aristaMinimna = new int[] { i, j };
+                                costoMinimo=costoArista;
+                            }
+                        }
+                    }
+
+                }
+                ArbolExpasion.Add(aristaMinimna);
+                verticesVisitados.Add(aristaMinimna[1]);
+            }
+            return ArbolExpasion;
         }
     }
 }
